@@ -45,12 +45,47 @@ namespace GeoLib.Services
         
         public IEnumerable<ZipCodeData> GetZips(string state)
         {
-            throw new NotImplementedException();
+            List<ZipCodeData> zipCodeData = new List<ZipCodeData>();
+
+            IZipCodeRepository zipCodeRepository = new ZipCodeRepository();
+            var zips = zipCodeRepository.GetByState(state);
+            if (zips != null)
+            {
+                foreach (var zipCode in zips)
+                {
+                    zipCodeData.Add(new ZipCodeData()
+                    {
+                        City =  zipCode.City,
+                        State = zipCode.State.Abbreviation,
+                        ZipCode = zipCode.Zip
+                    });
+                }
+            }
+
+            return zipCodeData;
         }
 
         public IEnumerable<ZipCodeData> GetZips(string zip, int range)
         {
-            throw new NotImplementedException();
+            List<ZipCodeData> zipCodeData = new List<ZipCodeData>();
+
+            IZipCodeRepository zipCodeRepository = new ZipCodeRepository();
+            var zipEntity = zipCodeRepository.GetByZip(zip);
+            var zips = zipCodeRepository.GetZipsForRange(zipEntity, range);
+            if (zips != null)
+            {
+                foreach (var zipCode in zips)
+                {
+                    zipCodeData.Add(new ZipCodeData()
+                    {
+                        City = zipCode.City,
+                        State = zipCode.State.Abbreviation,
+                        ZipCode = zipCode.Zip
+                    });
+                }
+            }
+
+            return zipCodeData;
         }
     }
 }
