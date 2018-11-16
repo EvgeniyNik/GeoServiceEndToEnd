@@ -1,6 +1,7 @@
 ﻿using GeoLib.Contracts;
 using System;
 using System.Collections.Generic;
+using GeoLib.Data;
 
 namespace GeoLib.Services
 {
@@ -13,7 +14,22 @@ namespace GeoLib.Services
 
         public ZipCodeData GetZipInfo(string zip)
         {
-            throw new NotImplementedException();
+            ZipCodeData zipCodeData = null;
+
+            IZipCodeRepository zipCodeRepository = new ZipCodeRepository();
+            ZipCode zipCodeEntity = zipCodeRepository.GetByZip(zip);
+
+            if (zipCodeEntity != null)
+            {
+                zipCodeData = new ZipCodeData()
+                {
+                    City = zipCodeEntity.City,
+                    State = zipCodeEntity.State.Abbreviation,
+                    ZipCode = zipCodeEntity.Zip
+                };
+            }
+
+            return zipCodeData;
         }
 
         public IEnumerable<ZipCodeData> GetZips(string state)

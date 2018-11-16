@@ -49,6 +49,14 @@
       <Project>{AD459320-A4A9-4464-8121-1F058A9F9BD1}</Project>
       <Name>GeoLib.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GeoLib.Core\GeoLib.Core.csproj">
+      <Project>{461922D9-747F-4BB0-AC2E-4737139EEDB6}</Project>
+      <Name>GeoLib.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GeoLib.Data\GeoLib.Data.csproj">
+      <Project>{DB2CA02F-5D34-4734-8A44-634BFD381244}</Project>
+      <Name>GeoLib.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
