@@ -7,12 +7,33 @@ namespace GeoLib.Services
 {
     public class GeoManager : IGeoService
     {
+        private IZipCodeRepository zipCodeRepository;
+        private IStateRepository stateRepository;
+
+
+        public GeoManager(IZipCodeRepository zipCodeRepository)
+        {
+            this.zipCodeRepository = zipCodeRepository;
+        }
+
+        public GeoManager(IStateRepository stateRepository)
+        {
+            this.stateRepository = stateRepository;
+        }
+
+        public GeoManager(IZipCodeRepository zipCodeRepository, IStateRepository stateRepository)
+        {
+            this.zipCodeRepository = zipCodeRepository;
+            this.stateRepository = stateRepository;
+        }
+
+        
         public ZipCodeData GetZipInfo(string zip)
         {
             ZipCodeData zipCodeData = null;
 
-            IZipCodeRepository zipCodeRepository = new ZipCodeRepository();
-            ZipCode zipCodeEntity = zipCodeRepository.GetByZip(zip);
+            IZipCodeRepository repository = this.zipCodeRepository ?? new ZipCodeRepository();
+            ZipCode zipCodeEntity = repository.GetByZip(zip);
 
             if (zipCodeEntity != null)
             {
@@ -31,9 +52,9 @@ namespace GeoLib.Services
         {
             List<string> stateData = new List<string>();
 
-            IStateRepository stateRepository = new StateRepository();
+            IStateRepository repository = stateRepository ?? new StateRepository();
 
-            IEnumerable<State> states = stateRepository.Get(primaryOnly);
+            IEnumerable<State> states = repository.Get(primaryOnly);
             if (states != null)
             {
                 foreach (var state in states)
@@ -47,8 +68,8 @@ namespace GeoLib.Services
         {
             List<ZipCodeData> zipCodeData = new List<ZipCodeData>();
 
-            IZipCodeRepository zipCodeRepository = new ZipCodeRepository();
-            var zips = zipCodeRepository.GetByState(state);
+            IZipCodeRepository repository = zipCodeRepository ?? new ZipCodeRepository();
+            var zips = repository.GetByState(state);
             if (zips != null)
             {
                 foreach (var zipCode in zips)
@@ -69,9 +90,9 @@ namespace GeoLib.Services
         {
             List<ZipCodeData> zipCodeData = new List<ZipCodeData>();
 
-            IZipCodeRepository zipCodeRepository = new ZipCodeRepository();
-            var zipEntity = zipCodeRepository.GetByZip(zip);
-            var zips = zipCodeRepository.GetZipsForRange(zipEntity, range);
+            IZipCodeRepository repository = zipCodeRepository ?? new ZipCodeRepository();
+            var zipEntity = repository.GetByZip(zip);
+            var zips = repository.GetZipsForRange(zipEntity, range);
             if (zips != null)
             {
                 foreach (var zipCode in zips)
