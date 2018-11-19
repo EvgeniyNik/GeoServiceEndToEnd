@@ -10,6 +10,9 @@ namespace GeoLib.Services
         private IZipCodeRepository zipCodeRepository;
         private IStateRepository stateRepository;
 
+        public GeoManager()
+        {
+        }
 
         public GeoManager(IZipCodeRepository zipCodeRepository)
         {
