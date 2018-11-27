@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GeoLib.Contracts;
+using GeoLib.Proxies;
 
 namespace GeoLib.Client
 {
@@ -32,8 +34,18 @@ namespace GeoLib.Client
 
         private void BtnGetInfo_Click(object sender, RoutedEventArgs e)
         {
-            if (txtZipCode.Text != null)
+            if (!string.IsNullOrWhiteSpace(txtZipCode.Text))
             {
+                GeoClient proxy = new GeoClient();
+
+                ZipCodeData data = proxy.GetZipInfo(txtZipCode.Text);
+                if (data != null)
+                {
+                    lblCity.Content = data.City;
+                    lblState.Content = data.State;
+                }
+
+                proxy.Close();
             }
         }
 
