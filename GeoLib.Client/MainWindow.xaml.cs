@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,6 +25,28 @@ namespace GeoLib.Client
         public MainWindow()
         {
             InitializeComponent();
+
+            this.Title = $"UI Running on Thread: {Thread.CurrentThread.ManagedThreadId} " +
+                         $"| Process {Process.GetCurrentProcess().Id}";
+        }
+
+        private void BtnGetInfo_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtZipCode.Text != null)
+            {
+            }
+        }
+
+        private void BtnGetZipCodes_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtState.Text != null)
+            {
+            }
+        }
+
+        private void BtnMakeCall_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
