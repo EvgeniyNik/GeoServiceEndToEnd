@@ -34,18 +34,26 @@ namespace GeoLib.Client
 
         private void BtnGetInfo_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txtZipCode.Text))
+            try
             {
-                GeoClient proxy = new GeoClient();
-
-                ZipCodeData data = proxy.GetZipInfo(txtZipCode.Text);
-                if (data != null)
+                if (!string.IsNullOrWhiteSpace(txtZipCode.Text))
                 {
-                    lblCity.Content = data.City;
-                    lblState.Content = data.State;
-                }
+                    GeoClient proxy = new GeoClient();
 
-                proxy.Close();
+                    ZipCodeData data = proxy.GetZipInfo(txtZipCode.Text);
+                    if (data != null)
+                    {
+                        lblCity.Content = data.City;
+                        lblState.Content = data.State;
+                    }
+
+                    proxy.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                Debug.WriteLine(ex.ToString());
             }
         }
 
