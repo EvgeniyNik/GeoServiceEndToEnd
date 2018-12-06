@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,14 +54,32 @@ namespace GeoLib.Client
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-                Debug.WriteLine(ex.ToString());
             }
         }
 
         private void BtnGetZipCodes_Click(object sender, RoutedEventArgs e)
         {
-            if (txtState.Text != null)
+            try
             {
+                if (!string.IsNullOrWhiteSpace(txtState.Text))
+                {
+                    var address = new EndpointAddress("net.tcp://localhost/GeoLib.WebHost/GeoService.svc");
+                    var binding = new NetTcpBinding();
+
+                    GeoClient proxy = new GeoClient(binding, address);
+                    IEnumerable<ZipCodeData> data = proxy.GetZips(txtState.Text);
+
+                    if (data != null)
+                    {
+                        lstZips.ItemsSource = data;
+                    }
+
+                    proxy.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
         }
 
