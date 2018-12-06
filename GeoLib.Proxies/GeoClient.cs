@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using GeoLib.Contracts;
@@ -12,9 +13,12 @@ namespace GeoLib.Proxies
     {
         public GeoClient(string endpointName)
             :base(endpointName)
-        {
-            
-        }
+        {}
+
+        public GeoClient(Binding binding, EndpointAddress address)
+            :base (binding, address)
+        {}
+
 
         public ZipCodeData GetZipInfo(string zip)
         {
