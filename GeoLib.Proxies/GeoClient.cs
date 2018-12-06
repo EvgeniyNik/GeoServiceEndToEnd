@@ -10,6 +10,12 @@ namespace GeoLib.Proxies
 {
     public class GeoClient : ClientBase<IGeoService>, IGeoService
     {
+        public GeoClient(string endpointName)
+            :base(endpointName)
+        {
+            
+        }
+
         public ZipCodeData GetZipInfo(string zip)
         {
             return Channel.GetZipInfo(zip);

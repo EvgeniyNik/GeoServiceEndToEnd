@@ -38,7 +38,7 @@ namespace GeoLib.Client
             {
                 if (!string.IsNullOrWhiteSpace(txtZipCode.Text))
                 {
-                    GeoClient proxy = new GeoClient();
+                    GeoClient proxy = new GeoClient("httpEP");
 
                     ZipCodeData data = proxy.GetZipInfo(txtZipCode.Text);
                     if (data != null)
