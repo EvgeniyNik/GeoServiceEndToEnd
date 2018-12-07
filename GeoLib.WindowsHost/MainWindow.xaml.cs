@@ -1,21 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using GeoLib.Contracts;
+using System.Diagnostics;
 using GeoLib.Services;
+using System.ServiceModel;
+using System.Threading;
+using System.Windows;
 
 namespace GeoLib.WindowsHost
 {
@@ -25,21 +13,29 @@ namespace GeoLib.WindowsHost
     public partial class MainWindow : Window
     {
         private ServiceHost geoManagerHost;
+        private ServiceHost messageManagerHost;
+
+        public static MainWindow MainUI;
 
         public MainWindow()
         {
             InitializeComponent();
 
+            MainUI = this;
+
             btnStart.IsEnabled = true;
             btnStop.IsEnabled = false;
 
-            this.Title = $"UI Running on Thread {Thread.CurrentThread.ManagedThreadId}";
+            this.Title = $"UI Running on Thread {Thread.CurrentThread.ManagedThreadId} | Process {Process.GetCurrentProcess().Id}";
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
             geoManagerHost = new ServiceHost(typeof(GeoManager));
+            messageManagerHost = new ServiceHost(typeof(MessageManager));
+
             geoManagerHost.Open();
+            messageManagerHost.Open();
 
             btnStart.IsEnabled = false;
             btnStop.IsEnabled = true;
@@ -48,9 +44,16 @@ namespace GeoLib.WindowsHost
         private void BtnStop_Click(object sender, RoutedEventArgs e)
         {
             geoManagerHost.Close();
+            messageManagerHost.Close();
 
             btnStart.IsEnabled = true;
             btnStop.IsEnabled = false;
+        }
+
+        public void ShowMessage(string message)
+        {
+            lblMessage.Content = $"{message}{Environment.NewLine}(shown on thread {Thread.CurrentThread.ManagedThreadId} " +
+                                 $"| Process {Process.GetCurrentProcess().Id})";
         }
     }
 }

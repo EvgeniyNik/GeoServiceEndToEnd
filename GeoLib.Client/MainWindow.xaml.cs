@@ -85,7 +85,22 @@ namespace GeoLib.Client
 
         private void BtnMakeCall_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(txtMessage.Text))
+                {
+                    var factory = new ChannelFactory<IMessageService>("tcpEP2");
+                    IMessageService proxy = factory.CreateChannel();
 
+                    proxy.ShowMessage(txtMessage.Text);
+
+                    factory.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }
