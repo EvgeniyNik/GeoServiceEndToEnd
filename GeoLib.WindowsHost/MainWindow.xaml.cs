@@ -4,6 +4,7 @@ using GeoLib.Services;
 using System.ServiceModel;
 using System.Threading;
 using System.Windows;
+using GeoLib.WindowsHost.Services;
 
 namespace GeoLib.WindowsHost
 {

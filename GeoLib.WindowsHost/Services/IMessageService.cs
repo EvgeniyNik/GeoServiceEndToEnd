@@ -5,12 +5,14 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeoLib.WindowsHost
+namespace GeoLib.WindowsHost.Services
 {
-    [ServiceContract(Namespace = "http://mysitename.com/evgeniy")]
+    [ServiceContract]
     public interface IMessageService
     {
         [OperationContract]
         void ShowMessage(string message);
+        [OperationContract]
+        MyTempContract2 TestMethod(MyTempContract request);
     }
 }
