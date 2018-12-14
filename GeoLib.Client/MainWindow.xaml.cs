@@ -93,6 +93,8 @@ namespace GeoLib.Client
                     IMessageService proxy = factory.CreateChannel();
 
                     proxy.ShowMessage(txtMessage.Text);
+                    var result = proxy.TestMethod(new MyRequest2 { Age = 10, Name = "Ivan" });
+                    MessageBox.Show(result?.Message ?? "null");
 
                     factory.Close();
                 }

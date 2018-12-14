@@ -64,8 +64,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Services\MyTempContract.cs" />
-    <Compile Include="Services\MyTempContract2.cs" />
+    <Compile Include="Services\MyRequest.cs" />
+    <Compile Include="Services\MyResponse.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

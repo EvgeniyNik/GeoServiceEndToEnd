@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace GeoLib.Proxies
 {
-    [ServiceContract(Namespace = "http://mysitename.com/evgeniy")]
+    [ServiceContract]
     public interface IMessageService
     {
         [OperationContract]
         void ShowMessage(string message);
+        [OperationContract]
+        MyResponse2 TestMethod(MyRequest2 request);
     }
 }

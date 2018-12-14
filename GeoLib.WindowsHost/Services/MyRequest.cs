@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace GeoLib.WindowsHost.Services
 {
-    [DataContract]
-    public class MyTempContract2
+    [DataContract(Namespace = "HDD")]
+    public class MyRequest
     {
         [DataMember]
-        public string Message { get; set; }
+        public string Name { get; set; }
+        [DataMember]
+        public int Age { get; set; }
     }
 }

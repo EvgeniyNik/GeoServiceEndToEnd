@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="GeoClient.cs" />
     <Compile Include="IMessageService.cs" />
+    <Compile Include="MyRequest.cs" />
+    <Compile Include="MyResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

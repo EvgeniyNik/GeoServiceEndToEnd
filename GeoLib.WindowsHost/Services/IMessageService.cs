@@ -13,6 +13,6 @@ namespace GeoLib.WindowsHost.Services
         [OperationContract]
         void ShowMessage(string message);
         [OperationContract]
-        MyTempContract2 TestMethod(MyTempContract request);
+        MyResponse TestMethod(MyRequest request);
     }
 }
