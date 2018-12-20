@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GeoLib.WindowsHost.Services
 {
-    [DataContract(Namespace = "HDD")]
+    [DataContract(Name = "MyRequest100500", Namespace = "HDD")]
     public class MyRequest
     {
         [DataMember]
