@@ -14,10 +14,10 @@ namespace GeoLib.WindowsHost.Services
             MainWindow.MainUI.ShowMessage(message);
         }
 
-        public MyResponse TestMethod(MyRequest request)
+        public MyResponse2 TestMethod(MyRequest2 request)
         {
             MessageBox.Show(request?.Name ?? "null");
-            return new MyResponse { Message = "Все ОК"};
+            return new MyResponse2 { Message = "Все ОК"};
         }
     }
 }

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace GeoLib.WindowsHost.Services
 {
-    [ServiceContract]
+    [ServiceContract(Namespace ="My.Temp.Namespace")]
     public interface IMessageService
     {
         [OperationContract]
         void ShowMessage(string message);
         [OperationContract]
-        MyResponse TestMethod(MyRequest request);
+        MyResponse2 TestMethod(MyRequest2 request);
     }
 }

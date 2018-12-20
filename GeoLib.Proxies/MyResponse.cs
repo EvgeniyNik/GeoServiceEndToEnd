@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace GeoLib.Proxies
 {
-    [DataContract(Namespace = "HDD")]
-    public class MyResponse2
+    [DataContract]
+    public class MyResponse
     {
         [DataMember]
         public string Message { get; set; }

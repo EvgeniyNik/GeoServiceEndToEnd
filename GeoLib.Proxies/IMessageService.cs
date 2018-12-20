@@ -13,6 +13,6 @@ namespace GeoLib.Proxies
         [OperationContract]
         void ShowMessage(string message);
         [OperationContract]
-        MyResponse2 TestMethod(MyRequest2 request);
+        MyResponse TestMethod(MyRequest request);
     }
 }

@@ -54,4 +54,4 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-//[assembly: ContractNamespace("http://mysitename.com/vasiliy", ClrNamespace = "GeoLib.WindowsHost.Services")]
+[assembly: ContractNamespace("http://mysitename.com/vasiliy", ClrNamespace = "GeoLib.WindowsHost.Services")]

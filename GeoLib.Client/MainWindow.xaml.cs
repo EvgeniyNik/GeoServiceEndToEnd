@@ -89,11 +89,11 @@ namespace GeoLib.Client
             {
                 if (!string.IsNullOrWhiteSpace(txtMessage.Text))
                 {
-                    var factory = new ChannelFactory<IMessageService>("tcpEP2");
+                    var factory = new ChannelFactory<IMessageService>("httpEP2");
                     IMessageService proxy = factory.CreateChannel();
 
                     proxy.ShowMessage(txtMessage.Text);
-                    var result = proxy.TestMethod(new MyRequest2 { Age = 10, Name = "Ivan" });
+                    var result = proxy.TestMethod(new MyRequest { Age = 10, Name = "Ivan" });
                     MessageBox.Show(result?.Message ?? "null");
 
                     factory.Close();
