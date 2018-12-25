@@ -9,6 +9,7 @@
     <Grid>
         <Button Name="btnStart" Content="Start Services" HorizontalAlignment="Left" Margin="91,32,0,0" VerticalAlignment="Top" Width="200" Height="50" Click="BtnStart_Click"/>
         <Button Name="btnStop" Content="Stop Services" HorizontalAlignment="Left" Margin="91,105,0,0" VerticalAlignment="Top" Width="200" Height="50" Click="BtnStop_Click"/>
-
+        <Button Name="btnInProc" Content="In Process Service" HorizontalAlignment="Left" Margin="91,180,0,0" VerticalAlignment="Top" Width="200" Height="25" Click="BtnInProc_Click"/>
+        <Label Name="lblMessage" HorizontalAlignment="Left" Margin="91,220,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
