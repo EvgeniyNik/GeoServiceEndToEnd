@@ -25,12 +25,16 @@ namespace GeoLib.Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        private GeoClient proxyMe;
+
         public MainWindow()
         {
             InitializeComponent();
 
             this.Title = $"UI Running on Thread: {Thread.CurrentThread.ManagedThreadId} " +
                          $"| Process {Process.GetCurrentProcess().Id}";
+
+            this.proxyMe = new GeoClient("tcpEP");
         }
 
         private void BtnGetInfo_Click(object sender, RoutedEventArgs e)
@@ -39,7 +43,7 @@ namespace GeoLib.Client
             {
                 if (!string.IsNullOrWhiteSpace(txtZipCode.Text))
                 {
-                    GeoClient proxy = new GeoClient("httpEP");
+                    GeoClient proxy = new GeoClient("tcpEP");
 
                     ZipCodeData data = proxy.GetZipInfo(txtZipCode.Text);
                     if (data != null)
@@ -63,18 +67,15 @@ namespace GeoLib.Client
             {
                 if (!string.IsNullOrWhiteSpace(txtState.Text))
                 {
-                    var address = new EndpointAddress("net.tcp://localhost/GeoLib.WebHost/GeoService.svc");
-                    var binding = new NetTcpBinding();
-
-                    GeoClient proxy = new GeoClient(binding, address);
-                    IEnumerable<ZipCodeData> data = proxy.GetZips(txtState.Text);
+                    //GeoClient proxy = new GeoClient("tcpEP");
+                    IEnumerable<ZipCodeData> data = proxyMe.GetZips(txtState.Text);
 
                     if (data != null)
                     {
                         lstZips.ItemsSource = data;
                     }
 
-                    proxy.Close();
+                    //proxy.Close();
                 }
             }
             catch (Exception ex)
