@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using GeoLib.Data;
 using System.Threading;
+using System.ServiceModel;
 
 namespace GeoLib.Services
 {
+    [ServiceBehavior(IncludeExceptionDetailInFaults = false)]
     public class GeoManager : IGeoService
     {
         private IZipCodeRepository zipCodeRepository;
@@ -34,7 +36,8 @@ namespace GeoLib.Services
         
         public ZipCodeData GetZipInfo(string zip)
         {
-            Thread.Sleep(6000);
+            //Thread.Sleep(6000);
+            throw new Exception("very bad fault");
 
             ZipCodeData zipCodeData = null;
 

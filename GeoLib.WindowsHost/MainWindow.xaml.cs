@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using System.ServiceModel.Description;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,6 +40,17 @@ namespace GeoLib.WindowsHost
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
             geoManagerHost = new ServiceHost(typeof(GeoManager));
+
+            var behavior = geoManagerHost.Description.Behaviors.Find<ServiceDebugBehavior>();
+            if (behavior == null)
+            {
+                var debugBehavior = new ServiceDebugBehavior();
+                debugBehavior.IncludeExceptionDetailInFaults = false;
+                geoManagerHost.Description.Behaviors.Add(debugBehavior);
+            }
+            else
+                behavior.IncludeExceptionDetailInFaults = false;
+
             geoManagerHost.Open();
 
             btnStart.IsEnabled = false;
