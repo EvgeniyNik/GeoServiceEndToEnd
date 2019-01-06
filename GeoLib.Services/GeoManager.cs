@@ -37,7 +37,7 @@ namespace GeoLib.Services
         public ZipCodeData GetZipInfo(string zip)
         {
             //Thread.Sleep(6000);
-            throw new Exception("very bad fault");
+            //throw new Exception("very bad fault");
 
             ZipCodeData zipCodeData = null;
 

@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GeoLib.Client.ServiceReference1;
 using GeoLib.Contracts;
 using GeoLib.Proxies;
 
@@ -34,7 +35,7 @@ namespace GeoLib.Client
             this.Title = $"UI Running on Thread: {Thread.CurrentThread.ManagedThreadId} " +
                          $"| Process {Process.GetCurrentProcess().Id}";
 
-            this.proxyMe = new GeoClient("tcpEP");
+            //this.proxyMe = new GeoClient("tcpEP");
         }
 
         private void BtnGetInfo_Click(object sender, RoutedEventArgs e)
@@ -43,16 +44,19 @@ namespace GeoLib.Client
             {
                 if (!string.IsNullOrWhiteSpace(txtZipCode.Text))
                 {
-                    GeoClient proxy = new GeoClient("tcpEP");
+                    //GeoClient proxy = new GeoClient("tcpEP");
 
-                    ZipCodeData data = proxy.GetZipInfo(txtZipCode.Text);
-                    if (data != null)
+                    using (GeoServiceClient client = new GeoServiceClient("NetTcpBinding_IGeoService"))
                     {
-                        lblCity.Content = data.City;
-                        lblState.Content = data.State;
+                        ZipCodeData data = client.GetZipInfo(txtZipCode.Text);
+                        if (data != null)
+                        {
+                            lblCity.Content = data.City;
+                            lblState.Content = data.State;
+                        }
                     }
 
-                    proxy.Close();
+                    //proxy.Close();
                 }
             }
             catch (Exception ex)
