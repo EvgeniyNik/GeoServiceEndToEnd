@@ -3,8 +3,8 @@ using GeoLib.Proxies;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.ServiceModel;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace GeoLib.Client
@@ -15,6 +15,7 @@ namespace GeoLib.Client
     public partial class MainWindow : Window
     {
         private StatefullGeoClient proxy;
+        private SynchronizationContext syncContext;
 
         public MainWindow()
         {
@@ -23,7 +24,9 @@ namespace GeoLib.Client
             this.Title = $"UI Running on Thread: {Thread.CurrentThread.ManagedThreadId} " +
                          $"| Process {Process.GetCurrentProcess().Id}";
 
-            proxy = new StatefullGeoClient();
+            proxy = new StatefullGeoClient("tcpEP");
+            proxy.Open();
+            syncContext = SynchronizationContext.Current;
         }
 
         private void BtnGetInfo_Click(object sender, RoutedEventArgs e)
@@ -41,13 +44,18 @@ namespace GeoLib.Client
             }
         }
 
-        private void BtnPushInfo_Click(object sender, RoutedEventArgs e)
+        private async void BtnPushInfo_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (!string.IsNullOrWhiteSpace(txtZipCode.Text))
                 {
-                    proxy.PushZip(txtZipCode.Text);
+                    string zipCode = txtZipCode.Text;
+
+                    await Task.Run(() =>
+                    {
+                        proxy.PushZip(zipCode);
+                    });
                 }
             }
             catch (Exception ex)

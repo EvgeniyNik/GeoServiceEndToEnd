@@ -6,13 +6,16 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace GeoLib.Services
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession,
+        ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class StatefullGeoManager : IStatefullGeoService
     {
         private ZipCode zipCodeEntity;
+        private int counter = 0;
 
         public ZipCodeData GetZipInfo()
         {
@@ -58,6 +61,9 @@ namespace GeoLib.Services
             ZipCodeRepository repository = new ZipCodeRepository();
 
             zipCodeEntity = repository.GetByZip(zipCode);
+
+            counter++;
+            MessageBox.Show($"ZipCode:{zipCode}. Counter:{counter}");
         }
     }
 }

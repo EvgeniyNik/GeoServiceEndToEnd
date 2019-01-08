@@ -10,6 +10,12 @@ namespace GeoLib.Proxies
 {
     public class StatefullGeoClient : ClientBase<IStatefullGeoService>, IStatefullGeoService
     {
+        public StatefullGeoClient(string endpointName)
+            : base(endpointName)
+        {
+
+        }
+
         public ZipCodeData GetZipInfo()
         {
             return Channel.GetZipInfo();

@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace GeoLib.Contracts
 {
-    [ServiceContract (SessionMode = SessionMode.Required)]
+    [ServiceContract]
     public interface IStatefullGeoService
     {
-        [OperationContract(IsInitiating = false)]
+        [OperationContract]
         void PushZip(string zipCode);
-        [OperationContract(IsInitiating = true)]
+        [OperationContract]
         ZipCodeData GetZipInfo();
-        [OperationContract(IsInitiating = true)]
+        [OperationContract]
         IEnumerable<ZipCodeData> GetZips(int range);
     }
 }
