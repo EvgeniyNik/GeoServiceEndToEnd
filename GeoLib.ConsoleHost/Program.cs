@@ -15,23 +15,16 @@ namespace GeoLib.ConsoleHost
         static void Main(string[] args)
         {
             ServiceHost geoManagerHost = new ServiceHost(typeof(GeoManager));
-
-            #region Создание endpoint в коде
-
-            //string address = "net.tcp://localhost:8009/GeoService";
-            //Binding binding = new WSHttpBinding();
-            //Type contract = typeof(IGeoService);
-
-            //geoManagerHost.AddServiceEndpoint(contract, binding, address);
-
-            #endregion
+            ServiceHost statefullGeoManagerHost = new ServiceHost(typeof(StatefullGeoManager));
 
             geoManagerHost.Open();
+            statefullGeoManagerHost.Open();
 
             Console.WriteLine("Services started. Press [Enter] to exit.");
             Console.ReadLine();
 
             geoManagerHost.Close();
+            statefullGeoManagerHost.Close();
         }
     }
 }

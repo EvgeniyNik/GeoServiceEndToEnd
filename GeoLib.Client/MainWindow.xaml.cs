@@ -1,22 +1,11 @@
-﻿using System;
+﻿using GeoLib.Contracts;
+using GeoLib.Proxies;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using GeoLib.Contracts;
-using GeoLib.Proxies;
 
 namespace GeoLib.Client
 {
@@ -25,31 +14,26 @@ namespace GeoLib.Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        private StatefullGeoClient proxy;
+
         public MainWindow()
         {
             InitializeComponent();
 
             this.Title = $"UI Running on Thread: {Thread.CurrentThread.ManagedThreadId} " +
                          $"| Process {Process.GetCurrentProcess().Id}";
+
+            proxy = new StatefullGeoClient();
         }
 
         private void BtnGetInfo_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (!string.IsNullOrWhiteSpace(txtZipCode.Text))
-                {
-                    GeoClient proxy = new GeoClient("httpEP");
+                ZipCodeData zipCode = proxy.GetZipInfo();
 
-                    ZipCodeData data = proxy.GetZipInfo(txtZipCode.Text);
-                    if (data != null)
-                    {
-                        lblCity.Content = data.City;
-                        lblState.Content = data.State;
-                    }
-
-                    proxy.Close();
-                }
+                lblState.Content = zipCode.State;
+                lblCity.Content = zipCode.City;
             }
             catch (Exception ex)
             {
@@ -57,24 +41,13 @@ namespace GeoLib.Client
             }
         }
 
-        private void BtnGetZipCodes_Click(object sender, RoutedEventArgs e)
+        private void BtnPushInfo_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (!string.IsNullOrWhiteSpace(txtState.Text))
+                if (!string.IsNullOrWhiteSpace(txtZipCode.Text))
                 {
-                    var address = new EndpointAddress("net.tcp://localhost/GeoLib.WebHost/GeoService.svc");
-                    var binding = new NetTcpBinding();
-
-                    GeoClient proxy = new GeoClient(binding, address);
-                    IEnumerable<ZipCodeData> data = proxy.GetZips(txtState.Text);
-
-                    if (data != null)
-                    {
-                        lstZips.ItemsSource = data;
-                    }
-
-                    proxy.Close();
+                    proxy.PushZip(txtZipCode.Text);
                 }
             }
             catch (Exception ex)
@@ -83,9 +56,23 @@ namespace GeoLib.Client
             }
         }
 
-        private void BtnMakeCall_Click(object sender, RoutedEventArgs e)
+        private void BtnGetZipCodeByRange_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(txtRange.Text))
+                {
+                    int.TryParse(txtRange.Text, out int range);
+                    IEnumerable<ZipCodeData> data = proxy.GetZips(range);
 
+                    if (data != null)
+                        lstZips.ItemsSource = data;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }
