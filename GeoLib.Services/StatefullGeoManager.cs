@@ -58,6 +58,13 @@ namespace GeoLib.Services
 
         public void PushZip(string zipCode)
         {
+            //throw new Exception("some message");
+            //var myException = new ArgumentException("Wrong argument");
+            //throw new FaultException<ArgumentException>(myException, "some reason");
+
+            var myErrorResponse = new ErrorResponse { Message = "Oioioioioi", Time = DateTime.UtcNow};
+            throw new FaultException<ErrorResponse>(myErrorResponse, "very important reason");
+
             ZipCodeRepository repository = new ZipCodeRepository();
 
             zipCodeEntity = repository.GetByZip(zipCode);

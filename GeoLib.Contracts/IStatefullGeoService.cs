@@ -11,6 +11,8 @@ namespace GeoLib.Contracts
     public interface IStatefullGeoService
     {
         [OperationContract]
+        [FaultContract(typeof(ArgumentException))]
+        [FaultContract(typeof(ErrorResponse))]
         void PushZip(string zipCode);
         [OperationContract]
         ZipCodeData GetZipInfo();
